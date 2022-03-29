@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.tableClass {
+	@apply bg-table-fixtures-page bg-cover bg-no-repeat bg-center h-screen w-screen;
+}
+.selectTeamsClass {
+	@apply bg-team-select-page bg-cover bg-no-repeat bg-center h-screen w-screen;
+}
+.fixturesClass {
+	@apply bg-table-fixtures-page bg-cover bg-no-repeat bg-center h-screen w-screen;
+}
+.h1 {
+	@apply text-4xl font-bold text-text-primary;
+}

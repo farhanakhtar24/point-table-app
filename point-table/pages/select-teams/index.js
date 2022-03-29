@@ -1,8 +1,11 @@
 import React from 'react'
+import Layout from '../../components/Layout/Layout';
 
 const selectTeamsPage = () => {
     return (
-        <div>selectTeamsPage</div>
+        <div className='selectTeamsClass'>
+            <Layout>hello</Layout>
+        </div>
     )
 }
 
