@@ -13,6 +13,17 @@ module.exports = {
       colors: {
         'main-item-box-background': '#C6CADD',
         'text-primary': "#33314E",
+        UI: {
+          activeButton: {
+            border: "#A08A17",
+            text: "#fff",
+            bg: "#000"
+          },
+          button: {
+            bg: "#D6DCF1",
+            text: "#33314E"
+          }
+        }
       },
     },
   },

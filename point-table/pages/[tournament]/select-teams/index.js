@@ -1,9 +1,9 @@
 import React from 'react'
-import Layout from '../../components/Layout/Layout';
+import Layout from '../../../components/Layout/Layout';
 
 const selectTeamsPage = () => {
     return (
-        <div className='selectTeamsClass'>
+        <div className='selectTeamsPageClass'>
             <Layout>hello</Layout>
         </div>
     )

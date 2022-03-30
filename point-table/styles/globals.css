@@ -2,15 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-.tableClass {
+.selectTournamentPageCLass {
+	@apply bg-root-page bg-cover bg-no-repeat bg-center h-screen w-screen;
+}
+.tablePageClass {
 	@apply bg-table-fixtures-page bg-cover bg-no-repeat bg-center h-screen w-screen;
 }
-.selectTeamsClass {
+.selectTeamsPageClass {
 	@apply bg-team-select-page bg-cover bg-no-repeat bg-center h-screen w-screen;
 }
-.fixturesClass {
+.fixturesPageClass {
 	@apply bg-table-fixtures-page bg-cover bg-no-repeat bg-center h-screen w-screen;
 }
 .h1 {
 	@apply text-4xl font-bold text-text-primary;
+}
+
+@layer utilities {
+	input[type="number"]::-webkit-inner-spin-button,
+	input[type="number"]::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+}
+
+.fixtures {
+	width: 100%;
+	overflow: auto;
+	height: 23.25rem;
 }

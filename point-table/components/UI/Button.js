@@ -2,7 +2,11 @@ import React from 'react'
 
 const Button = (props) => {
   return (
-    <div className='flex justify-center w-full p-5 bg-slate-200 rounded-md'>{ props.children }</div>
+    <div className='w-full p-5 rounded-md flex justify-center font-semibold
+    bg-UI-button-bg text-UI-button-text border-2 border-UI-button-bg
+    opacity-90 uppercase'>
+      { props.children }
+    </div>
   )
 }
 
