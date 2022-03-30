@@ -41,11 +41,11 @@ const MATCH_LIST = [
 const FixturesTable = () => {
     return (
         <MainItemBox>
-            <div className='flex flex-col'>
+            <div className='flex flex-col h-full'>
                 <div className='h1 text-center py-5'>
                     Scores & Fixtures
                 </div>
-                <div className='grid grid-cols-2 gap-5 text-text-primary'>
+                <div className='h-full grid grid-cols-2 gap-5 text-text-primary'>
                     <form>
                         <CurrentFixtues />
                     </form>

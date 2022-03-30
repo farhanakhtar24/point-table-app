@@ -29,7 +29,10 @@ const tablePage = () => {
     return (
         <div className='tablePageClass'>
             <Layout>
-                <div className='grid gap-3 grid-cols-2 justify-around w-full mb-3'>
+                <div className='grid gap-3 grid-cols-3 justify-around w-full mb-3'>
+                    <Link href={ `/` }>
+                        <a><Button>Tournaments</Button></a>
+                    </Link>
                     <Link href={ `/${tournament}/table` }>
                         <a><ActiveButton>Points Table</ActiveButton></a>
                     </Link>

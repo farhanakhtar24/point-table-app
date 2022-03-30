@@ -10,12 +10,14 @@ import Button from '../../../components/UI/Button';
 const fixturesPage = () => {
     const router = useRouter();
     const tournament = router.query.tournament;
-    // const pathname = router.pathname.split('/')[1];
 
     return (
         < div className='fixturesPageClass' >
             <Layout>
-                <div className='grid gap-3 grid-cols-2 justify-around w-full mb-3'>
+                <div className='grid gap-3 grid-cols-3 justify-around w-full mb-3'>
+                    <Link href={ `/` }>
+                        <a><Button>Tournaments</Button></a>
+                    </Link>
                     <Link href={ `/${tournament}/table` }>
                         <a><Button>Points Table</Button></a>
                     </Link>
