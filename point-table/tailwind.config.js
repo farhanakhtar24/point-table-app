@@ -6,9 +6,9 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'table-fixtures-page': "url('..//components/Assets/table-fixtures-wallpaper.jpg')",
-        'team-select-page': "url('..//components/Assets/team-select-page-wallpaper.jpg')",
-        'root-page': "url('..//components/Assets/root-page-wallpaper.jpg')",
+        'table-fixtures-page': "url('..//public/Assets/table-fixtures-wallpaper.jpg')",
+        'team-select-page': "url('..//public/Assets/team-select-page-wallpaper.jpg')",
+        'root-page': "url('..//public/Assets/root-page-wallpaper.jpg')",
       },
       colors: {
         'main-item-box-background': '#C6CADD',
