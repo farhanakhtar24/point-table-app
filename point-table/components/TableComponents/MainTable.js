@@ -1,77 +1,40 @@
-import React from 'react'
+import { doc, getDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react'
 import MainItemBox from '../UI/MainItemBox';
 import TeamDiv from './TeamDiv';
-
-const DUMMYTEAM = [
-    {
-        id: 't1',
-        name: 'FC Bayern',
-        played: 0,
-        won: 0,
-        drawn: 0,
-        lost: 0,
-        goals_against: 0,
-        goals_for: 0,
-        points: 9,
-    },
-    {
-        id: 't2',
-        name: 'Real Madrid',
-        played: 0,
-        won: 0,
-        drawn: 0,
-        lost: 0,
-        goals_against: 0,
-        goals_for: 0,
-        points: 0,
-    },
-    {
-        id: 't3',
-        name: 'Manchester United',
-        played: 0,
-        won: 0,
-        drawn: 0,
-        lost: 0,
-        goals_against: 0,
-        goals_for: 0,
-        points: 4,
-    },
-    {
-        id: 't4',
-        name: 'Paris Saint-Germain',
-        played: 0,
-        won: 0,
-        drawn: 0,
-        lost: 0,
-        goals_against: 0,
-        goals_for: 0,
-        points: 7,
-    },
-    {
-        id: 't5',
-        name: 'Manchester City',
-        played: 0,
-        won: 0,
-        drawn: 0,
-        lost: 0,
-        goals_against: 0,
-        goals_for: 0,
-        points: 8,
-    },
-    {
-        id: 't6',
-        name: 'Liverpool',
-        played: 0,
-        won: 0,
-        drawn: 0,
-        lost: 0,
-        goals_against: 0,
-        goals_for: 0,
-        points: 3,
-    },
-]
+import { useRouter } from 'next/router';
+import { db } from '../../firebase/firebase-config';
 
 const MainTable = () => {
+    const router = useRouter();
+    const tournamentName = router.query.tournament;
+
+    const randomArray = [];
+    const [DUMMYTEAM, setDUMMYTEAM] = useState([]);
+
+    useEffect(() => {
+        const tournamentfetcher = async function () {
+            const pointsTableRef = doc(db, "tournaments", `${tournamentName}`, "tournament-collection", "points-table");
+            const selectedTeamsRef = doc(db, "tournaments", `${tournamentName}`, "tournament-collection", "selected-teams");
+            const pointTable = await getDoc(pointsTableRef);
+            const selectedTeams = await getDoc(selectedTeamsRef);
+            if (pointTable.exists() && selectedTeams.exists()) {
+                console.log(pointTable.data());
+                console.log(selectedTeams.data());
+                for (const [key, value] of Object.entries(pointTable.data())) {
+                    randomArray.push(value);
+                }
+                for (const [key, value] of Object.entries(selectedTeams.data())) {
+                    // randomArray.push(value);
+                }
+            } else {
+                console.log("No such document!");
+            }
+            setDUMMYTEAM(randomArray);
+        }
+        tournamentfetcher()
+    }, [tournamentName])
+
     DUMMYTEAM.sort((a, b) => a.points > b.points ? -1 : 1);
     return (
         <MainItemBox>
@@ -113,3 +76,24 @@ const MainTable = () => {
 }
 
 export default MainTable;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

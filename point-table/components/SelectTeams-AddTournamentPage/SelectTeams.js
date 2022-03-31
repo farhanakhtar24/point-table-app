@@ -176,12 +176,12 @@ const TeamsList = [
 const SelectTeams = ({ teams }) => {
     const addTeam = function (teamData) {
         teams.add(teamData);
-        console.log(teams);
+        // console.log(teams);
     }
 
     const removeTeam = function (teamData) {
         teams.delete(teamData);
-        console.log(teams);
+        // console.log(teams);
     }
 
     return (

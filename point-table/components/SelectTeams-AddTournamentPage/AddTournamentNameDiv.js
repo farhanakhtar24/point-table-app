@@ -2,72 +2,45 @@ import React, { useRef } from 'react'
 import MainItemBox from '../UI/MainItemBox';
 import Button from '../UI/Button';
 import { useRouter } from 'next/router';
-import { doc, setDoc } from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from '../../firebase/firebase-config';
 
-const dbStructuring = function (teams) {
-    const selectedTeamsObject = {};
-    const table = {};
-    const fixtures = {};
-
-    /*
-    {
-        id: 'fixture-1',
-        homeTeam: 'MUN',
-        awayTeam: 'LIV',
-    },
-     */
-
-    //Selected teams objects structure 
-    [...teams].forEach(team => {
-        selectedTeamsObject[team.short] = team;
-    });
-
-    //Table structure 
-    [...teams].forEach(team => {
-        table[team.name] = {
-            id: team.id,
-            name: team.name,
-            played: 0,
-            won: 0,
-            drawn: 0,
-            lost: 0,
-            goals_against: 0,
-            goals_for: 0,
-            points: 0,
-        };
-    });
-    //Fixtures structure 
-
-
-    return { selectedTeamsObject, table };
-}
+import useDbStructuring from '../../hooks/use-DbStructuring';
 
 const AddTournamentNameDiv = ({ teams }) => {
     const router = useRouter();
-    const tournamentName = useRef('');
+    const tournamentNameRef = useRef('');
 
     // submitting team data to firebase
     const addTournamentName = async function (event) {
         event.preventDefault();
 
-        if (tournamentName.current.value.length > 0 && teams.size > 0) {
+        if (tournamentNameRef.current.value.length > 0 && teams.size >= 2) {
             // converting teams set to object
-            const { selectedTeamsObject, table } = dbStructuring(teams);
+            const { selectedTeamsObject, table, fixtures } = useDbStructuring(teams);
 
-            await setDoc(doc(db, tournamentName.current.value, "selected-teams"), selectedTeamsObject);
-            await setDoc(doc(db, tournamentName.current.value, "points-table"), table);
-            router.push(`${tournamentName.current.value}/table`);
+            const selectedTeamsRef = doc(db, 'tournaments', tournamentNameRef.current.value, 'tournament-collection', "selected-teams");
+            const tableRef = doc(db, 'tournaments', tournamentNameRef.current.value, 'tournament-collection', "points-table");
+            const fixturesRef = doc(db, 'tournaments', tournamentNameRef.current.value, 'tournament-collection', "fixtures");
+
+            await updateDoc(doc(db, 'tournaments', 'tournamentNames'), {
+                tournamentNamesDoc: arrayUnion(tournamentNameRef.current.value)
+            })
+            await setDoc(selectedTeamsRef, selectedTeamsObject);
+            await setDoc(tableRef, table);
+            await setDoc(fixturesRef, fixtures);
+
+            router.push(`${tournamentNameRef.current.value}/table`);
         }
-        else if (tournamentName.current.value.length === 0 && teams.size === 0) {
-            alert('Please select at least one team & add a tournament name');
+        else if (tournamentNameRef.current.value.length === 0 && teams.size < 2) {
+            alert('Please select at least two teams & add a tournament name !!');
         }
-        else if (tournamentName.current.value.length === 0) {
-            alert('Please enter a tournament name');
+        else if (tournamentNameRef.current.value.length === 0) {
+            alert('Please enter a tournament name !!');
             console.log(teams);
         }
-        else if (teams.size === 0) {
-            alert('Please select at least one team');
+        else if (teams.size < 2) {
+            alert('Please select at least two teams !!');
         }
     }
 
@@ -75,7 +48,7 @@ const AddTournamentNameDiv = ({ teams }) => {
         <MainItemBox>
             <form className='w-full h-full flex items-center justify-center flex-col gap-3 p-10 text-text-primary' onSubmit={ addTournamentName }>
                 <label className='uppercase font-semibold text-xl'>Tournament Name</label>
-                <input ref={ tournamentName } type='text' className='text-center rounded-lg 
+                <input ref={ tournamentNameRef } type='text' className='text-center rounded-lg 
                 bg-main-item-box-background outline-none w-8/12focus:outline-text-primary p-5'></input>
                 <button className='w-8/12 active:scale-95' ><Button>Add</Button></button>
             </form>

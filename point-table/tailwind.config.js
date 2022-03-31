@@ -15,9 +15,9 @@ module.exports = {
         'text-primary': "#33314E",
         UI: {
           activeButton: {
-            border: "#A08A17",
+            border: "#06113D",
             text: "#fff",
-            bg: "#000"
+            bg: "#02094F"
           },
           button: {
             bg: "#D6DCF1",

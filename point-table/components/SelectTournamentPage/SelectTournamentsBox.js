@@ -1,33 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainItemBox from '../UI/MainItemBox';
 import TournamentCard from './TournamentCard';
 import Link from 'next/link';
 import NewTournamentCard from './NewTournamentCard';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from '../../firebase/firebase-config';
 
-const DUMMYTOURNAMENTS = [
-    {
-        key: 'tour-1',
-        name: 'Tournament 1',
-        url: '/tournament-1/table',
-    },
-    {
-        key: 'tour-2',
-        name: 'Tournament 2',
-        url: '/tournament-2/table',
-    },
-]
 
 const SelectTournamentsBox = () => {
+    const [DUMMYTOURNAMENTS, setDUMMYTOURNAMENTS] = useState([]);
+    const randomArray = [];
     useEffect(() => {
-        // const tournamentFetcher = async function () {
-        //     const querySnapshot = await getDocs(collection(db, 'tournaments'));
-        //     querySnapshot.forEach((doc) => {
-        //         // doc.data() is never undefined for query doc snapshots
-        //         console.log(doc.id, " => ", doc.data());
-        //     });
-        // }
+        const tournamentNamesfetcher = async function () {
+            const docRef = doc(db, "tournaments", "tournamentNames");
+            const docSnap = await getDoc(docRef);
+            const { tournamentNamesDoc } = docSnap.data()
+            tournamentNamesDoc.forEach((element, index) => {
+                randomArray.push({
+                    key: `tour-${index + 1}`,
+                    name: element,
+                    url: `/${element}/table`
+                })
+            });
+            setDUMMYTOURNAMENTS(randomArray);
+        }
+        tournamentNamesfetcher();
     }, [])
 
 
