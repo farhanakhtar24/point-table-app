@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import MainItemBox from '../UI/MainItemBox';
 import Button from '../UI/Button';
 import { useRouter } from 'next/router';
@@ -8,14 +8,17 @@ import { db } from '../../firebase/firebase-config';
 import useDbStructuring from '../../hooks/use-DbStructuring';
 
 const AddTournamentNameDiv = ({ teams }) => {
+    const [isLoading, setIsloading] = useState(false);
+
     const router = useRouter();
     const tournamentNameRef = useRef('');
 
     // submitting team data to firebase
     const addTournamentName = async function (event) {
         event.preventDefault();
-
         if (tournamentNameRef.current.value.length > 0 && teams.size >= 2) {
+            setIsloading(true);
+
             // converting teams set to object
             const { selectedTeamsObject, table, fixtures } = useDbStructuring(teams);
 
@@ -29,6 +32,8 @@ const AddTournamentNameDiv = ({ teams }) => {
             await setDoc(selectedTeamsRef, selectedTeamsObject);
             await setDoc(tableRef, table);
             await setDoc(fixturesRef, fixtures);
+
+            setIsloading(false);
 
             router.push(`${tournamentNameRef.current.value}/table`);
         }
@@ -50,7 +55,9 @@ const AddTournamentNameDiv = ({ teams }) => {
                 <label className='uppercase font-semibold text-xl'>Tournament Name</label>
                 <input ref={ tournamentNameRef } type='text' className='text-center rounded-lg 
                 bg-main-item-box-background outline-none w-8/12focus:outline-text-primary p-5'></input>
-                <button className='w-8/12 active:scale-95' ><Button>Add</Button></button>
+                <button className='w-8/12 active:scale-95' >
+                    <Button isLoading={ isLoading }>Add</Button>
+                </button>
             </form>
         </MainItemBox>
     )
