@@ -22,9 +22,9 @@ const AddTournamentNameDiv = ({ teams }) => {
             // converting teams set to object
             const { selectedTeamsObject, table, fixtures } = useDbStructuring(teams);
 
-            const selectedTeamsRef = doc(db, 'tournaments', tournamentNameRef.current.value, 'tournament-collection', "selected-teams");
-            const tableRef = doc(db, 'tournaments', tournamentNameRef.current.value, 'tournament-collection', "points-table");
-            const fixturesRef = doc(db, 'tournaments', tournamentNameRef.current.value, 'tournament-collection', "fixtures");
+            const selectedTeamsRef = doc(db, tournamentNameRef.current.value, "selected-teams");
+            const tableRef = doc(db, tournamentNameRef.current.value, "points-table");
+            const fixturesRef = doc(db, tournamentNameRef.current.value, "fixtures");
 
             await updateDoc(doc(db, 'tournaments', 'tournamentNames'), {
                 tournamentNamesDoc: arrayUnion(tournamentNameRef.current.value)

@@ -17,21 +17,16 @@ const MainTable = () => {
 
     useEffect(() => {
         const tournamentfetcher = async function () {
-            const pointsTableRef = doc(db, "tournaments", `${tournamentName}`, "tournament-collection", "points-table");
-            const selectedTeamsRef = doc(db, "tournaments", `${tournamentName}`, "tournament-collection", "selected-teams");
-            const pointTable = await getDoc(pointsTableRef);
-            const selectedTeams = await getDoc(selectedTeamsRef);
-            if (pointTable.exists() && selectedTeams.exists()) {
-                console.log(pointTable.data());
-                console.log(selectedTeams.data());
+            const pointTable = await getDoc(doc(db, `${tournamentName}`, "points-table"));
+            // const selectedTeams = await getDoc(doc(db, `${tournamentName}`, "selected-teams"));
+            if (pointTable.exists()) {
                 for (const [key, value] of Object.entries(pointTable.data())) {
                     randomArray.push(value);
                 }
-                for (const [key, value] of Object.entries(selectedTeams.data())) {
-                    // randomArray.push(value);
-                }
-            } else {
-                console.log("No such document!");
+                // const selectedTeams = await getDoc(doc(db, `${tournamentName}`, "selected-teams"));
+                // for (const [key, value] of Object.entries(selectedTeams.data())) {
+                // }
+
             }
 
             setDUMMYTEAM(randomArray);

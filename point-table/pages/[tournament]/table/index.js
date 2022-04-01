@@ -6,8 +6,6 @@ import ActiveButton from '../../../components/UI/ActiveButton';
 import Button from '../../../components/UI/Button';
 import { useRouter } from 'next/router';
 
-import { db } from '../../../firebase/firebase-config';
-import { collection, getDoc, addDoc, updateDoc, doc, deleteDoc } from '@firebase/firestore';
 import Head from 'next/head';
 
 

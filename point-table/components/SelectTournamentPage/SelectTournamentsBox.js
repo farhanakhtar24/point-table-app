@@ -3,7 +3,7 @@ import MainItemBox from '../UI/MainItemBox';
 import TournamentCard from './TournamentCard';
 import Link from 'next/link';
 import NewTournamentCard from './NewTournamentCard';
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 import { db } from '../../firebase/firebase-config';
 import { ImSpinner2 } from 'react-icons/im';
 
@@ -15,6 +15,7 @@ const SelectTournamentsBox = () => {
     const [DUMMYTOURNAMENTS, setDUMMYTOURNAMENTS] = useState([]);
     const randomArray = [];
     useEffect(() => {
+
         const tournamentNamesfetcher = async function () {
             const docRef = doc(db, "tournaments", "tournamentNames");
             const docSnap = await getDoc(docRef);
@@ -31,7 +32,6 @@ const SelectTournamentsBox = () => {
         }
         tournamentNamesfetcher();
     }, [])
-
 
     return (
         <MainItemBox>
